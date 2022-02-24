@@ -8,14 +8,30 @@ import Search from './components/Search';
 
 function App() {
   const [foods, setFoods] = React.useState(foodsArr);
-  const [searchInput, setSearchInput] = React.useState('');
+  const [searchFoods, setSearchFoods] = React.useState(foods);
+  const [searchText, setSearchText] = React.useState('');
+
+  React.useEffect(() => {
+    let searchProducts = foods.filter((food) => {
+      return food.name.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setSearchFoods(searchProducts);
+  }, [searchText, foods]);
+
+  // function deleteFood (foodNameStr) => {
+  //   const filteredFoods = foods.filter((oneFood) => {
+  //     return oneFood.name !== foodNameStr; // exclude the food object we want to delete
+  //   });
+
+  //   setFoods(filteredFoods);
+  // }
+
   return (
     <div>
-      <AddFoodForm foods={foods} setFoods={setFoods} />
-      <Search />
+      <AddFoodForm foods={searchFoods} setFoods={setSearchFoods} />
+      <Search searchText={searchText} setSearchText={setSearchText} />
       <Divider>Food List</Divider>
-
-      {foods.map((food) => {
+      {searchFoods.map((food) => {
         return (
           <div>
             <FoodBox food={food} />

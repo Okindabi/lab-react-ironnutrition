@@ -6,7 +6,13 @@ function Search(props) {
     <div>
       <Divider>Search</Divider>
       <label>Search</label>
-      <Input value={undefined} type="text" onChange={() => {}} />
+      <Input
+        value={props.searchText}
+        type="text"
+        onChange={(e) => {
+          props.setSearchText(e.target.value);
+        }}
+      />
     </div>
   );
 }
